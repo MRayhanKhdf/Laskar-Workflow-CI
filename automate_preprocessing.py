@@ -3,7 +3,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 
 def load_and_preprocess(filepath):
-    df = pd.read_csv("Dataset/ai_job_dataset.csv")
+    df = pd.read_csv("ai_job_dataset.csv")
 
     # Drop kolom tidak relevan atau sulit diproses
     df = df.drop(columns=[
