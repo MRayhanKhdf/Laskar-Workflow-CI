@@ -23,14 +23,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          
+
       - name: Run training script with MLflow
-        working-directory: Membangun_model
         env:
           DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          mkdir -p models
           python modelling.py \
             --data_path ai_job_dataset.csv \
             --model_output models/model.pkl
