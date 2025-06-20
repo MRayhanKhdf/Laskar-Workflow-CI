@@ -21,6 +21,7 @@ jobs:
       with:
         auto-activate-base: false
         environment-file: conda.yaml
+        activate-environment: salary-env
         python-version: 3.10
 
     - name: Install MLflow

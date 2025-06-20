@@ -1,0 +1,10 @@
+name: salary-prediction
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      dataset_path: {type: str, default: "ai_job_dataset.csv"}
+    command: >
+      python modelling.py --dataset_path {dataset_path}
