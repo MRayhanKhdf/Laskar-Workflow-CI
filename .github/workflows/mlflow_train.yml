@@ -1,0 +1,30 @@
+name: Train MLflow Model
+
+on:
+  push:
+    paths:
+      - '**.py'
+      - '**.yaml'
+      - '**/MLProject'
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Miniconda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-activate-base: false
+        environment-file: conda.yaml
+        python-version: 3.10
+
+    - name: Install MLflow
+      run: pip install mlflow==2.12.1
+
+    - name: Run MLflow Project
+      run: mlflow run . --entry-point main
