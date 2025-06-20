@@ -31,7 +31,6 @@ jobs:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
           DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
         run: |
-          mkdir -p models
           python modelling.py \
             --data_path=ai_job_dataset.csv \
             --model_output=models/model.pkl
