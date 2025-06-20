@@ -1,29 +1,37 @@
-name: Train MLflow Model
+name: Workflow CI
 
 on:
   push:
-    paths:
-      - '**.py'
-      - 'conda.yaml'
-      - 'MLProject'
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  train:
+  train_model:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Set up Miniconda
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        auto-activate-base: false
-        environment-file: conda.yaml
-        python-version: 3.10
-        activate-environment: salary-env
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Train Model with MLflow
-      shell: bash -l {0}
-      run: |
-        mlflow run . --entry-point main -P dataset_path=ai_job_dataset.csv
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r Membangun_model/requirements.txt
+
+      - name: Run training script with MLflow
+        working-directory: Membangun_model
+        env:
+          DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        run: |
+          mkdir -p models
+          python modelling.py \
+            --data_path ai_job_dataset.csv \
+            --model_output models/model.pkl
