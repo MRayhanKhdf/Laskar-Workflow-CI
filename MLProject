@@ -20,13 +20,11 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        working-directory: ./MLProject
         run: |
           python -m pip install --upgrade pip
           pip install pandas numpy scikit-learn mlflow matplotlib seaborn
 
       - name: Run training script
-        working-directory: ./MLProject
         env:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
           DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
